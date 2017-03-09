@@ -31,8 +31,6 @@ export default class Alerts extends Component {
 
 		return (
 			<div>
-				<h1>Followers</h1>
-
 				<ul className="followers-list">{followersList}</ul>
 			</div>
 		);

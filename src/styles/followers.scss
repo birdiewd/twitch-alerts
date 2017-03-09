@@ -1,11 +1,26 @@
-$follower-height: 40px;
+$view-height: 1080px;
+$view-width: 1920px;
+$follower-height: 3vh;
 $follower-font-size: $follower-height * .7;
 
 $follower-height-first: $follower-height * 1.5;
 $follower-font-size-first: $follower-height-first * .7;
 
-$follower-margin-y: $follower-height;
-$follower-margin-x: 3px;
+$follower-margin-y: $follower-height * 2;
+$follower-margin-x: 5px;
+
+body{
+	background: magenta;
+	background-image: url('/assets/images/Hearthstone Screenshot 03-07-17 22.51.21.png');
+	background-repeat: no-repeat;
+}
+#root{
+	position: relative;
+	height: $view-height;
+	width: $view-width;
+	font-size: 20px;
+	overflow: hidden;
+}
 
 @keyframes flip-in {
     from {
@@ -47,22 +62,33 @@ $follower-margin-x: 3px;
 }
 
 .followers-list{
+	position: absolute;
+	top: 0;
+	left: 15vw;
 	overflow: hidden;
-	border-top: solid black 5px;
+	margin: 0;
+	padding: 0;
 	perspective: 200px;
-	width: 800px;
+	width: 22vw;
 }
 .followers-list--item{
-	margin: $follower-margin-x $follower-margin-y;
 	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	margin: $follower-margin-x $follower-margin-y;
 	perspective-origin: 50% 0;
 	transform-style: preserve-3d;
 	line-height: $follower-height;
 	font-size: $follower-font-size;
-	background-image: url("/assets/images/follower-background.jpg");
+
+	// Needs latest Compass, add '@import "compass"' to your scss
+// Permalink - use to edit and share this gradient:
+// http://colorzilla.com/gradient-editor/#000c7a+0,5c88aa+100
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(4,60,181,1)), color-stop(54%, rgba(4,60,181,0.87)), color-stop(100%, rgba(103,151,181,0.75))); /* safari4+,chrome */
 	color: white;
-	// border-radius: 4px;
-	box-shadow: 0 1px 3px rgba(black, .3);
+	box-shadow: 0 1px 3px rgba(black, .5);
+	// border: solid rgba(#888, .5) 1px;
 	padding: 0 12px;
 
 	&:first-child{
