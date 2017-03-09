@@ -1,41 +1,70 @@
-$view-height: 1080px;
-$view-width: 1920px;
-$follower-height: 3vh;
+$viewable-height: 1080px;
+$viewable-width: 1920px;
+
+@function vw($parts){
+	@return $parts / 100 * $viewable-width;
+}
+
+@function vh($parts){
+	@return $parts / 100 * $viewable-height;
+}
+
+$follower-width: vw(22);
+$follower-position: vw(15);
+$follower-height: vh(2.8);
 $follower-font-size: $follower-height * .7;
 
-$follower-height-first: $follower-height * 1.5;
-$follower-font-size-first: $follower-height-first * .7;
+$follower-height-first: $follower-height * 1.8;
+$follower-font-size-first: $follower-height-first * .6;
 
 $follower-margin-y: $follower-height * 2;
 $follower-margin-x: 5px;
 
+$bell-curve: cubic-bezier(0.700, -0.150, 0.230, 1.650);
+
 body{
 	background: magenta;
-	background-image: url('/assets/images/Hearthstone Screenshot 03-07-17 22.51.21.png');
 	background-repeat: no-repeat;
 }
 #root{
 	position: relative;
-	height: $view-height;
-	width: $view-width;
+	height: $viewable-height;
+	width: $viewable-width;
+	background-image: url('/assets/images/Hearthstone Screenshot 03-07-17 22.51.21.png');
+	background-size: contain;
 	font-size: 20px;
 	overflow: hidden;
 }
 
 @keyframes flip-in {
-    from {
+	0% {
 		transform: rotateX(-90deg) translateZ(-4em);
 		height: 0;
 		opacity: 0;
 	}
-    to {
+	50% {
 		transform: rotateX(0deg);
 		height: $follower-height-first;
 		opacity: 1;
 	}
+	60% {
+		transform: rotateX(10deg) translateZ(.20em);
+	}
+	75% {
+		transform: rotateX(-7deg) translateZ(-.10em);
+	}
+	85% {
+		transform: rotateX(4deg) translateZ(.08em);
+	}
+	95% {
+		transform: rotateX(-1deg) translateZ(-.03em);
+	}
+	100% {
+		transform: rotateX(0deg);
+	}
 }
 @keyframes flip-out {
-    from {
+	from {
 		transform: rotateX(0deg);
 		height: $follower-height;
 		opacity: 1;
@@ -49,7 +78,7 @@ body{
 	}
 }
 @keyframes shrink-down {
-    from {
+	from {
 		font-size: $follower-font-size-first;
 		line-height: $follower-height-first;
 		margin: $follower-margin-x;
@@ -64,12 +93,12 @@ body{
 .followers-list{
 	position: absolute;
 	top: 0;
-	left: 15vw;
+	left: $follower-position;
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
 	perspective: 200px;
-	width: 22vw;
+	width: $follower-width;
 }
 .followers-list--item{
 	overflow: hidden;
@@ -82,29 +111,27 @@ body{
 	line-height: $follower-height;
 	font-size: $follower-font-size;
 
-	// Needs latest Compass, add '@import "compass"' to your scss
-// Permalink - use to edit and share this gradient:
-// http://colorzilla.com/gradient-editor/#000c7a+0,5c88aa+100
 	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(4,60,181,1)), color-stop(54%, rgba(4,60,181,0.87)), color-stop(100%, rgba(103,151,181,0.75))); /* safari4+,chrome */
 	color: white;
-	box-shadow: 0 1px 3px rgba(black, .5);
-	// border: solid rgba(#888, .5) 1px;
+	box-shadow: 0 1px 1px rgba(black, .5);
 	padding: 0 12px;
 
 	&:first-child{
 		margin: $follower-margin-x;
 		font-size: $follower-font-size-first;
 		line-height: $follower-height-first;
-		animation: flip-in 1s 1 ease-out;
+		animation: flip-in 1s 1 ease-in;
 	}
 
 	&:nth-child(2){
 		line-height: $follower-height-first;
 		font-size: $follower-font-size-first;
-		animation: shrink-down 1s 1 ease-out forwards;
+		animation: shrink-down 800ms 1 ease-in forwards;
+		animation-timing-function: $bell-curve;
 	}
 
-	&:nth-child(n+8){
-		animation: flip-out 1s 1 ease-out forwards;
+	&:nth-child(n+6){
+		animation: flip-out 500ms 1 ease-out forwards;
+		animation-timing-function: $bell-curve;
 	}
 }
